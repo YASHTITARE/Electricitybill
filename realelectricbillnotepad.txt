@@ -1,0 +1,142 @@
+#include<iostream>
+#include<conio.h>
+using namespace std;
+
+int rentalcharge=116;    //rentalcharge of circuit
+
+class electricbill
+{
+	private:
+	    int con_no;
+	public:
+	    float cr,pr,unit,oldbal,cha,nb;
+	    float distcha,fuelcha,eletax;
+	    
+	    void currentreading();
+	    void previousreading();
+	    void units();
+	    void oldbalance();
+	    float charges();
+	    void distributioncharge();
+	    float fuelcharge();
+	    void ele_tax();
+	    void netbill();
+	    void show();	
+};
+void electricbill::currentreading()
+{
+	cout<<"\nENTER THE CONSUMER NO.\n";
+	cin>>con_no;
+	cout<<"ENTER THE CURRENT READING:\n";
+	cin>>cr;
+}
+void electricbill::previousreading()
+{
+	cout<<"ENTER THE PREVIOUS READING:\n";
+	cin>>pr;
+}
+void electricbill::units()
+{
+	unit=cr-pr;
+	cout<<"units="<<unit;
+}
+void electricbill::oldbalance()
+{
+	cout<<"\nENTER The OLD BALANCE:\n";
+	cin>>oldbal;
+}
+float electricbill::charges()
+{	
+	if (unit <= 100)
+	{
+		return cha=(unit * 4.14f);
+	}
+	else if (unit <= 200)
+	{
+		return cha=((100 * 4.14f) +
+			(unit - 100) * 9.64f);
+	}
+	else if (unit <= 300)
+	{
+		return cha=((100 * 4.14f) +
+			(100 * 9.64f) +
+			(unit - 200) * 13.61f);
+	}
+	else if (unit > 300)
+	{
+		return cha=((100 * 4.14f) +
+			(100 * 9.64f) +
+			(100 * 13.61f) +
+			(unit - 300) * 15.57f);
+	}
+}
+void electricbill::distributioncharge()
+{
+	distcha=1.36*unit;
+}
+float electricbill::fuelcharge()
+{
+	if (unit <= 100)
+	{
+		return fuelcha=(unit * 0.65f);
+	}
+	else if (unit <= 200)
+	{
+		return fuelcha=((100 * 0.65f) +
+			(unit - 100) * 1.45f);
+	}
+	else if (unit <= 300)
+	{
+		return fuelcha=((100 * 0.65f) +
+			(100 * 1.45f) +
+			(unit - 200) * 2.25f);
+	}
+	else if (unit > 300)
+	{
+		return fuelcha=((100 * 0.65f) +
+			(100 * 1.45f) +
+			(100 * 2.25f) +
+			(unit - 300) * 3.15f);
+	}
+}
+void electricbill::ele_tax()
+{
+	eletax=(rentalcharge+cha+distcha+fuelcha)*0.16f;
+}
+void electricbill::netbill()
+{
+	nb=(rentalcharge+cha+distcha+fuelcha+eletax+oldbal);
+	cout<<"NET BILL IS:";
+	cout<<nb;
+}
+void electricbill::show()
+{
+	cout<<"\n"<<cr<<"\t\t"<<pr<<"\t\t"<<unit<<"\t\t"<<oldbal<<" \t"<<cha<<"\t\t"<<distcha<<"\t\t\t"<<fuelcha<<"\t\t\t"<<eletax<<"\t\t"<<nb<<"\n";
+}
+main()
+{
+	electricbill e[100];
+	int n,i;
+	cout<<"enter the no. of consumers :";
+	cin>>n;
+	for(i=0;i<n;i++)
+	{
+	e[i].currentreading();
+	e[i].previousreading();
+	e[i].units();
+	e[i].oldbalance();
+	e[i].charges();
+	e[i].distributioncharge();
+	e[i].fuelcharge();
+	e[i].ele_tax();
+	e[i].netbill();
+	}
+	cout<<"\n\t\t\t====================\n";
+	cout<<"\n\t\t\tELECTRICITY BILL";
+ 	cout<<"\n\t\t\t====================\n";
+ 	cout<<"\n"<<"CUR-READING\tPRE-READING\tUNITS\tOLDBALANCE\tCHARGES\t\tDISTRIBUTIOCHARGES\tFUELCHARGES\tELETAXES\t\tNETBILL\n";
+ 	for(i=0;i<n;i++)
+	{
+ 	e[i].show();
+ 	}
+}
